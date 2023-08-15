@@ -1,5 +1,9 @@
-package org.example;
+package org.example.controller;
 
+import org.example.model.Authorities;
+import org.example.service.AuthorizationService;
+import org.example.exception.InvalidCredentials;
+import org.example.exception.UnauthorizedUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,22 +17,22 @@ import java.util.List;
 public class AuthorizationController {
     AuthorizationService service;
 
-    public AuthorizationController() {
+    private AuthorizationController() {
         this.service = new AuthorizationService();
     }
 
     @GetMapping("/authorize")
-    public List<Authorities> getAuthorities(@RequestParam("user") String user, @RequestParam("password") String password) {
+    private List<Authorities> getAuthorities(@RequestParam("user") String user, @RequestParam("password") String password) {
         return service.getAuthorities(user, password);
     }
 
     @ExceptionHandler(InvalidCredentials.class)
-    public ResponseEntity<String> handleInvalidCredentials(InvalidCredentials e) {
+    private ResponseEntity<String> handleInvalidCredentials(InvalidCredentials e) {
         return new ResponseEntity<>("Exception: " + e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UnauthorizedUser.class)
-    public ResponseEntity<String> handleUnauthorizedUser(UnauthorizedUser e) {
+    private ResponseEntity<String> handleUnauthorizedUser(UnauthorizedUser e) {
         System.out.println("Exception: " + e.getMessage());
         return new ResponseEntity<>("Exception: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
     }

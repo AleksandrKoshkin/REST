@@ -1,4 +1,6 @@
-package org.example;
+package org.example.repository;
+
+import org.example.model.Authorities;
 
 import java.util.ArrayList;
 import java.util.List;
