@@ -4,6 +4,7 @@ import org.example.model.Authorities;
 import org.example.service.AuthorizationService;
 import org.example.exception.InvalidCredentials;
 import org.example.exception.UnauthorizedUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,10 +16,11 @@ import java.util.List;
 
 @RestController
 public class AuthorizationController {
-    AuthorizationService service;
+    private final AuthorizationService service;
 
-    private AuthorizationController() {
-        this.service = new AuthorizationService();
+    @Autowired
+    private AuthorizationController(AuthorizationService service) {
+        this.service = service;
     }
 
     @GetMapping("/authorize")
